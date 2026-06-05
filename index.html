@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tornike Tabagari — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1e1e1e;
+      --text: #e8e4dc;
+      --muted: #666;
+      --accent: #c8a96e;
+      --accent-dim: rgba(200, 169, 110, 0.12);
+      --red: #e05a4a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative;
+      padding: 80px 64px 64px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .header-left h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .header-left h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .header-subtitle {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .header-right {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .cv-link {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      padding: 10px 20px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .cv-link:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* ── INTRO ── */
+    .intro {
+      padding: 80px 64px;
+      max-width: 680px;
+    }
+
+    .intro p {
+      font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+      color: var(--text);
+      margin-bottom: 1.2em;
+    }
+
+    .intro p:last-child { margin-bottom: 0; }
+
+    .intro .highlight {
+      color: var(--accent);
+      font-style: italic;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1em;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .section-label::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 60px;
+      background: var(--border);
+    }
+
+    /* ── PROJECTS ── */
+    .projects {
+      padding: 0 64px 80px;
+    }
+
+    .project-grid {
+      display: grid;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .project {
+      background: var(--bg);
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+      transition: background 0.3s;
+    }
+
+    .project:hover {
+      background: var(--surface);
+    }
+
+    .project-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+
+    .project h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .project-tag {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 3px 10px;
+      margin-bottom: 24px;
+    }
+
+    .project-description {
+      font-size: 0.95rem;
+      color: #aaa;
+      line-height: 1.8;
+    }
+
+    .project-description p { margin-bottom: 1em; }
+    .project-description p:last-child { margin-bottom: 0; }
+
+    .project-description strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .project-links {
+      margin-top: 28px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .project-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+    }
+    .project-link:hover { opacity: 0.6; }
+
+    .project-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .project-stat {
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      background: var(--surface);
+    }
+
+    .stat-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .tech-stack {
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      background: var(--surface);
+    }
+
+    .tech-stack-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .tech-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tech-pill {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+    }
+
+    /* ── WHY SECTION ── */
+    .why-section {
+      padding: 80px 64px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .why-section .big-quote {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      line-height: 1.25;
+      color: var(--text);
+    }
+
+    .why-section .big-quote em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .why-text {
+      font-size: 0.95rem;
+      color: #aaa;
+      line-height: 1.9;
+    }
+
+    .why-text p { margin-bottom: 1.2em; }
+    .why-text p:last-child { margin-bottom: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 64px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    footer .name {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    footer .contact {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      header, .intro, .projects, .why-section, footer {
+        padding-left: 28px;
+        padding-right: 28px;
+      }
+
+      header { flex-direction: column; align-items: flex-start; }
+      .header-right { text-align: left; }
+
+      .project { grid-template-columns: 1fr; }
+      .why-section { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── FADE IN ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.7s ease forwards;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in:nth-child(1) { animation-delay: 0.1s; }
+    .fade-in:nth-child(2) { animation-delay: 0.25s; }
+    .fade-in:nth-child(3) { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-left fade-in">
+      <h1>Tornike<br><em>Tabagari</em></h1>
+      <p class="header-subtitle">Tbilisi, Georgia &nbsp;·&nbsp; Builder &nbsp;·&nbsp; AI Creative</p>
+    </div>
+    <div class="header-right fade-in">
+      <a href="cv.html" class="cv-link">View CV →</a>
+    </div>
+  </header>
+
+  <section class="intro">
+    <p>
+      I'm Tornike. I'm a builder from Tbilisi, Georgia.
+    </p>
+    <p>
+      For the past two years I've been making software that runs on AI — connecting models, designing systems, shipping real products that real people use. But somewhere along the way I realized something: I've been working on the engine without knowing how to steer it.
+    </p>
+    <p>
+      <span class="highlight">I know how to make AI do things.</span> I don't yet know how to make those things mean something.
+    </p>
+    <p>That's why I'm here.</p>
+  </section>
+
+  <section class="projects">
+    <div class="section-label">Work</div>
+
+    <div class="project-grid">
+
+      <!-- PROJECT 1 -->
+      <div class="project">
+        <div class="project-info">
+          <div class="project-number">01</div>
+          <h2>Know-It-All Bot</h2>
+          <span class="project-tag">AI &amp; Creative</span>
+          <div class="project-description">
+            <p>
+              A quiz app that runs on three different AI models simultaneously — <strong>Groq, Gemini, and Cohere</strong>. Each one has a different speed, a different personality, a different way of thinking about a question.
+            </p>
+            <p>
+              But that's not the interesting part.
+            </p>
+            <p>
+              The interesting part is that I could make it about <strong>anything</strong>. Any topic, any difficulty, any format I could imagine. I realized I wasn't just building software — I was building a universe with <strong>unlimited scenarios</strong>. Whatever I could think of, I could create it for any user.
+            </p>
+            <p>
+              One evening someone played it and laughed at exactly the right moment, got frustrated, came back for another round. That's the moment I stopped thinking like an engineer and started thinking like someone who makes experiences.
+            </p>
+            <div class="project-links">
+              <a href="https://github.com/toktab/know-it-all" class="project-link" target="_blank">GitHub →</a>
+              <a href="#" class="project-link" target="_blank">Live Demo →</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-visual">
+          <div class="project-stat">
+            <div class="stat-value">3</div>
+            <div class="stat-label">AI Models simultaneously</div>
+          </div>
+          <div class="project-stat">
+            <div class="stat-value">∞</div>
+            <div class="stat-label">Possible scenarios</div>
+          </div>
+          <div class="tech-stack">
+            <div class="tech-stack-label">Stack</div>
+            <div class="tech-pills">
+              <span class="tech-pill">Groq</span>
+              <span class="tech-pill">Gemini</span>
+              <span class="tech-pill">Cohere</span>
+              <span class="tech-pill">Java</span>
+              <span class="tech-pill">Spring Boot</span>
+              <span class="tech-pill">REST API</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 2 -->
+      <div class="project">
+        <div class="project-info">
+          <div class="project-number">02</div>
+          <h2>GTU Hackathon</h2>
+          <span class="project-tag">Solo · 2nd Place</span>
+          <div class="project-description">
+            <p>
+              8 hours. No team. One constraint I set for myself: a stranger had to understand it in 30 seconds.
+            </p>
+            <p>
+              I built a platform where <strong>any user can create their own quiz game, and anyone in the world can play it</strong>. The full system — database, backend, frontend — built alone while others had teams of three or four.
+            </p>
+            <p>
+              Looking back, the technical part was the easy part. The hard part was deciding what to cut — what not to build. That's a creative decision, and I didn't have a word for it at the time.
+            </p>
+          </div>
+        </div>
+        <div class="project-visual">
+          <div class="project-stat">
+            <div class="stat-value">8h</div>
+            <div class="stat-label">Solo build time</div>
+          </div>
+          <div class="project-stat">
+            <div class="stat-value">2nd</div>
+            <div class="stat-label">Place out of full teams</div>
+          </div>
+          <div class="tech-stack">
+            <div class="tech-stack-label">Stack</div>
+            <div class="tech-pills">
+              <span class="tech-pill">Java</span>
+              <span class="tech-pill">Spring Boot</span>
+              <span class="tech-pill">PostgreSQL</span>
+              <span class="tech-pill">HTML/CSS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECT 3 -->
+      <div class="project">
+        <div class="project-info">
+          <div class="project-number">03</div>
+          <h2>EV Distributed System</h2>
+          <span class="project-tag">University of Alicante · ERASMUS+</span>
+          <div class="project-description">
+            <p>
+              Built during my ERASMUS+ year in Spain. A fully distributed electric vehicle charging system — <strong>five components talking to each other</strong>, handling over 100 simultaneous users.
+            </p>
+            <p>
+              I built this in Alicante, in Spanish, surrounded by people from across Europe. Partway through, my teammate stepped back. I rebuilt the project from scratch, alone, in the final 10 days.
+            </p>
+            <p>
+              That environment changed how I think. Not just what I know — how I think. <strong>Spain is where I work best.</strong> I know that now.
+            </p>
+          </div>
+        </div>
+        <div class="project-visual">
+          <div class="project-stat">
+            <div class="stat-value">5</div>
+            <div class="stat-label">Distributed components</div>
+          </div>
+          <div class="project-stat">
+            <div class="stat-value">100+</div>
+            <div class="stat-label">Concurrent users</div>
+          </div>
+          <div class="tech-stack">
+            <div class="tech-stack-label">Stack</div>
+            <div class="tech-pills">
+              <span class="tech-pill">Java</span>
+              <span class="tech-pill">Spring Boot</span>
+              <span class="tech-pill">Microservices</span>
+              <span class="tech-pill">REST API</span>
+              <span class="tech-pill">Docker</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="why-section">
+    <div class="big-quote">
+      I build things that use AI. I want to learn how to make them <em>matter.</em>
+    </div>
+    <div class="why-text">
+      <p>
+        Miami Ad School's AI Creative program is the exact bridge I need — between the technical side I know and the creative side I'm hungry to learn. I'm not coming to discover what AI can do. I already know that from the inside. I'm coming to learn what to do with it.
+      </p>
+      <p>
+        I'm Georgian, I speak Spanish, I've lived and studied in Spain. I've shipped real products. I have one more thing most applicants don't: <strong>I understand the machines I'll be creating with.</strong>
+      </p>
+      <p>
+        Give me one opportunity, one shot, and I won't miss.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <span class="name">Tornike Tabagari — 2026</span>
+    <a href="mailto:toktabbusiness@gmail.com" class="contact">toktabbusiness@gmail.com</a>
+  </footer>
+
+</body>
+</html>
